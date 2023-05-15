@@ -5,7 +5,20 @@
 {% endblock title %}
 
 {% block content %}
-<div class="container d-flex justify-content-center mt-5 flex-row">
+<div class="container d-flex flex-column justify-content-center mt-5 flex-row">
+    <div>
+        <div class="alert alert-info" role="alert" dir="rtl">
+            <h4 class="alert-heading">توجه!</h4>
+            <p>
+            <ul>
+                <li>فقط فایل های srt پشتیبانی میشود</li>
+                <li>بعد از شروع ترجمه از صفحه خارج نشوید</li>
+                <li>بعد از تمام شدن پروسه ترجمه فایل به صورت خودکار دانلود مشیود</li>
+                <li>بعد از خارج شدن صفحه به فایل دسترسی نخواهید داشت</li>
+            </ul>
+            </p>
+        </div>
+    </div>
     <div class="form">
         <form method="post" dir="rtl" enctype="multipart/form-data">
             <!-- select language -->
