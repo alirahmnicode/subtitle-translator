@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, send_file, flash, redirec
 
 from subtitle import translate_subtitle
 from .utilities import allowed_file
+from google_translate.constant import GOOGLE_LANGUAGES_TO_CODES
 
 
 bp = Blueprint("views", __name__)
@@ -15,8 +16,11 @@ def index():
 @bp.route("/subtitle/translate/", methods=["GET", "POST"])
 async def translate_view():
     if request.method == "POST":
-        # check if the post request has the file part
+        form = request.form
+
         file_name = request.files["file"].filename
+        target_language = form.get("language")
+        bilingual = form.get("bilingual") == "on"
 
         if "file" not in request.files or file_name == "":
             flash("فایلی انتخاب نشده.", "warning")
@@ -27,13 +31,15 @@ async def translate_view():
         if allowed_file(file_name) and file:
             subtitle_text = file.read().decode("utf-8")
             # translate subtitle
-            new_file = await translate_subtitle(subtitle_text, "fa")
+            new_file = await translate_subtitle(subtitle_text, target_language, bilingual)
             return send_file(
-                new_file, download_name="ali.srt", mimetype="srt", as_attachment=True
+                new_file, download_name=file_name, mimetype="srt", as_attachment=True
             )
         else:
             flash("فایل انتخاب شده مجاز نیست", "danger")
             return redirect(request.url)
 
     if request.method == "GET":
-        return render_template("subtitle/translate.html")
+        # languages suport
+        languages = GOOGLE_LANGUAGES_TO_CODES
+        return render_template("subtitle/translate.html", languages=languages)
