@@ -1,6 +1,8 @@
 import aiohttp
 from bs4 import BeautifulSoup as bs
 
+from .constant import BASE_URL
+
 
 class GoogleTranslate:
     """Translate text from https://translate.google.com/m"""
@@ -17,7 +19,7 @@ class GoogleTranslate:
         }
 
     async def translate(self) -> str:
-        url = "https://translate.google.com/m"
+        url = BASE_URL
         connector = aiohttp.TCPConnector(limit=50)
         async with aiohttp.ClientSession(connector=connector) as session:
             res = await session.get(url=url, params=self.params)
