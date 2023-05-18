@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="form">
-        <form method="post" dir="rtl" enctype="multipart/form-data">
+        <form method="post" dir="rtl" enctype="multipart/form-data" id="form">
             <!-- select language -->
             <div class="mb-3">
                 <p>ترجمه به زبان؟</p>
@@ -47,5 +47,101 @@
             </div>
         </form>
     </div>
+    <div dir="rtl" class="d-none" id="progress">
+        <div>
+            <p>زمان تقربی <span id="time"></span> ثانیه</p>
+        </div>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: 0%;"
+                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
+        </div>
+        <div>
+            <p id="progress-message"></p>
+        </div>
+    </div>
 </div>
+<script>
+    const fileSelector = document.getElementById('subtitle');
+
+    fileSelector.addEventListener('change', (event) => {
+        const fileList = event.target.files;
+        readFile(fileList[0])
+    });
+
+    function readFile(file) {
+        const chunck = 200
+        var time = 0
+        var totalTime = 0
+
+        const reader = new FileReader();
+        // Set the onload function
+        reader.onload = function (event) {
+            // Get the file contents
+            const fileContents = event.target.result;
+            // Split the file contents into an array of lines
+            const lines = fileContents.split('\n');
+            const totalSubtitles = findeNumberOfSubitles(lines)
+
+            // store time neded in local storage
+            if (totalSubtitles > chunck) {
+                time = totalSubtitles / chunck
+                totalTime = Math.round(time) + 5
+            } else {
+                totalTime = 3
+            }
+            localStorage.setItem('totalTime', totalTime);
+
+            
+        };
+        // Read the file
+        reader.readAsText(file);
+    }
+
+    function findeNumberOfSubitles(lines) {
+        for (let i = lines.length; i >= 0; i--) {
+            line = lines[i]
+            if (line !== undefined) {
+                const pattern = /\d+/g;
+                const numbers = line.match(pattern);
+                if (numbers !== null && numbers.length == 1) {
+                    return parseInt(line)
+                }
+            }
+        }
+    }
+
+    function startProgress(time) {
+        document.getElementById("progress").classList.remove("d-none")
+        let progressBar = document.getElementsByClassName("progress-bar")[0]
+        var develop = Math.round(100 / time)
+        var width = 0
+
+        var prog = setInterval(function () {
+            width += develop
+            progressBar.style.width = `${width}%`
+            progressBar.innerHTML = `${width}%`
+
+            if (width > 100) {
+                progressBar.style.width = `100%`
+                progressBar.innerHTML = `100%`
+                clearInterval(prog)
+                var message = "ترجمه تمام شد درحال اماده سازی فایل برای دانلود"
+                document.getElementById("progress-message").innerHTML = message
+            }
+
+        }, 1000);
+
+    }
+
+    const form = document.querySelector('#form');
+
+    form.addEventListener('submit', function (event) {
+        
+        // Retrieve an time from local storage
+        const totalTime = localStorage.getItem('totalTime');
+        document.getElementById("time").innerHTML = totalTime
+        startProgress(totalTime)
+        
+    });
+</script>
 {% endblock content %}
