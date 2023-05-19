@@ -1,8 +1,20 @@
-from flask import Blueprint, render_template, request, send_file, flash, redirect
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    send_file,
+    flash,
+    redirect,
+    send_from_directory,
+    current_app,
+)
 
 from subtitle import translate_subtitle
 from .utilities import allowed_file
 from google_translate.constant import GOOGLE_LANGUAGES_TO_CODES
+
+import os
+import io
 
 
 bp = Blueprint("views", __name__)
@@ -22,6 +34,8 @@ async def translate_view():
         target_language = form.get("language")
         bilingual = form.get("bilingual") == "on"
 
+        files_directory = os.path.join(current_app.config["FILES_FOLDER"])
+
         if "file" not in request.files or file_name == "":
             flash("فایلی انتخاب نشده.", "warning")
             return redirect(request.url)
@@ -31,9 +45,17 @@ async def translate_view():
         if allowed_file(file_name) and file:
             subtitle_text = file.read().decode("utf-8")
             # translate subtitle
-            new_file = await translate_subtitle(subtitle_text, target_language, bilingual)
-            return send_file(
-                new_file, download_name=file_name, mimetype="srt", as_attachment=True
+            await translate_subtitle(
+                subtitle_text,
+                target_language,
+                bilingual,
+                files_path=files_directory,
+                file_name=file_name,
+            )
+            return send_from_directory(
+                directory=files_directory,
+                path=file_name,
+                as_attachment=True
             )
         else:
             flash("فایل انتخاب شده مجاز نیست", "danger")

@@ -11,6 +11,10 @@ def create_app(test_config=None):
         DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
     )
 
+    # config files directory
+    FILES_FOLDER = '/path/to/the/files'
+    app.config['FILES_FOLDER'] = FILES_FOLDER
+
     if test_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_pyfile("config.py", silent=True)
@@ -21,6 +25,7 @@ def create_app(test_config=None):
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
+        os.makedirs(app.config['FILES_FOLDER'])
     except OSError:
         pass
 

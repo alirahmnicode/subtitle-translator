@@ -6,7 +6,9 @@ from google_translate import GoogleTranslate
 from .sub import make_subtitle
 
 
-async def translate_subtitle(file: str, target_l: str, bilingual: bool):
+async def translate_subtitle(
+    file: str, target_l: str, bilingual: bool, files_path: str, file_name: srt
+):
     """This function translates the srt file and returns the translated file."""
     subtitles = list(srt.parse(file))
 
@@ -26,7 +28,7 @@ async def translate_subtitle(file: str, target_l: str, bilingual: bool):
             await asyncio.sleep(1)
         all_subs.append(subs)
 
-    new_subtitles = make_subtitle(all_subs)
+    new_subtitles = make_subtitle(all_subs, files_path, file_name)
 
     return new_subtitles
 
