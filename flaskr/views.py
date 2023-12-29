@@ -32,7 +32,6 @@ async def translate_view():
 
         file_name = request.files["file"].filename
         target_language = form.get("language")
-        print(target_language)
         bilingual = form.get("bilingual") == "on"
 
         files_directory = os.path.join(current_app.config["FILES_FOLDER"])
@@ -52,7 +51,6 @@ async def translate_view():
                 files_path=files_directory,
                 file_name=file_name,
             )
-            print(type(file))
             file_path = files_directory + f"/{file_name}"
             return send_file(
                file_path,
