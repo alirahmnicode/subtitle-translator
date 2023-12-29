@@ -32,6 +32,7 @@ async def translate_view():
 
         file_name = request.files["file"].filename
         target_language = form.get("language")
+        print(target_language)
         bilingual = form.get("bilingual") == "on"
 
         files_directory = os.path.join(current_app.config["FILES_FOLDER"])
@@ -41,20 +42,21 @@ async def translate_view():
             return redirect(request.url)
 
         file = request.files["file"]
-
         if allowed_file(file_name) and file:
             subtitle_text = file.read().decode("utf-8")
             # translate subtitle
-            await translate_subtitle(
+            file = await translate_subtitle(
                 subtitle_text,
                 target_language,
                 bilingual,
                 files_path=files_directory,
                 file_name=file_name,
             )
-            return send_from_directory(
-                directory=files_directory,
-                path=file_name,
+            print(type(file))
+            file_path = files_directory + f"/{file_name}"
+            return send_file(
+               file_path,
+               mimetype="srt",
                 as_attachment=True
             )
         else:

@@ -1,0 +1,365 @@
+1
+00:00:05,600 --> 00:00:07,790
+One of the reasons a lot of people failing with 
+ یکی از دلایل شکست بسیاری از مردم است
+
+2
+00:00:07,800 --> 00:00:11,890
+automated testing is that they test implementations not behaviors. 
+ تست خودکار این است که آنها پیاده سازی ها را آزمایش می کنند نه رفتارها.
+
+3
+00:00:11,900 --> 00:00:13,090
+Let me explain what. 
+ بذار توضیح بدم چیه
+
+4
+00:00:13,100 --> 00:00:13,190
+I mean. 
+ منظور من این است که.
+
+5
+00:00:13,200 --> 00:00:14,890
+Let's say we want to test a microwave, 
+ فرض کنید می خواهیم یک مایکروویو را آزمایش کنیم،
+
+6
+00:00:14,900 --> 00:00:17,889
+you press the start button and observe the monitor, 
+ دکمه شروع را فشار دهید و مانیتور را مشاهده کنید،
+
+7
+00:00:17,900 --> 00:00:21,290
+you expect the monitor to show a timer running for 1 minute, 
+ انتظار دارید مانیتور یک تایمر را به مدت 1 دقیقه نشان دهد،
+
+8
+00:00:21,300 --> 00:00:21,590
+right? 
+ درست؟
+
+9
+00:00:21,600 --> 00:00:24,389
+So this is how we expect a microwave to behave 
+ بنابراین ما انتظار داریم که یک مایکروویو اینگونه رفتار کند
+
+10
+00:00:24,400 --> 00:00:25,689
+and that's how we test it. 
+ و به این ترتیب ما آن را آزمایش می کنیم.
+
+11
+00:00:25,700 --> 00:00:28,590
+We don't open up a microwave and test the electrical 
+ مایکروویو را باز نمی کنیم و جریان الکتریکی را تست نمی کنیم
+
+12
+00:00:28,600 --> 00:00:31,490
+signal going in and out of every transistor. 
+ ورود و خروج سیگنال از هر ترانزیستور
+
+13
+00:00:31,500 --> 00:00:33,590
+Just to see if the microwave is working or not. 
+ فقط برای اینکه ببینم مایکروویو کار میکنه یا نه.
+
+14
+00:00:33,600 --> 00:00:35,490
+Testing software is the same. 
+ نرم افزار تست هم همینطور.
+
+15
+00:00:35,500 --> 00:00:37,490
+We should test how the software behaves. 
+ ما باید نحوه عملکرد نرم افزار را آزمایش کنیم.
+
+16
+00:00:37,500 --> 00:00:40,690
+not how it's implemented because the implementation may change over 
+ نه اینکه چگونه اجرا می شود زیرا ممکن است پیاده سازی تغییر کند
+
+17
+00:00:40,700 --> 00:00:40,990
+time. 
+ زمان.
+
+18
+00:00:41,000 --> 00:00:44,290
+I see a lot of people testing individual of building 
+ من افراد زیادی را می بینم که در حال آزمایش فردی ساختمان هستند
+
+19
+00:00:44,300 --> 00:00:44,990
+blocks on my API. 
+ در API من مسدود می شود.
+
+20
+00:00:45,000 --> 00:00:47,690
+ like models views routers. 
+ مانند مدل‌ها، روترها را مشاهده می‌کنند.
+
+21
+00:00:47,700 --> 00:00:48,990
+Serializer and so on 
+ سریال ساز و غیره
+
+22
+00:00:49,000 --> 00:00:51,590
+overtime the implementation will change. 
+ اضافه کاری اجرا تغییر خواهد کرد.
+
+23
+00:00:51,600 --> 00:00:56,490
+you may replace a function based view with a class based generic view and later 
+ شما می توانید یک نمای مبتنی بر تابع را با یک نمای عمومی مبتنی بر کلاس و بعد از آن جایگزین کنید
+
+24
+00:00:56,500 --> 00:00:56,590
+on, 
+ بر،
+
+25
+00:00:56,600 --> 00:00:58,990
+you may replaced that view with the view set. 
+ شما می توانید آن نمای را با مجموعه نمایش جایگزین کنید.
+
+26
+00:00:59,000 --> 00:00:59,890
+Similarly, 
+ به همین ترتیب،
+
+27
+00:00:59,900 --> 00:01:03,490
+inspect your model into two different models or combined two 
+ مدل خود را در دو مدل مختلف یا ترکیب دو مدل بررسی کنید
+
+28
+00:01:03,500 --> 00:01:04,289
+models into 1. 
+ مدل ها به 1.
+
+29
+00:01:04,800 --> 00:01:06,690
+These are implementation details that may change. 
+ اینها جزئیات پیاده سازی هستند که ممکن است تغییر کنند.
+
+30
+00:01:06,700 --> 00:01:09,289
+If you write tests for these details, 
+ اگر برای این جزئیات تست بنویسید،
+
+31
+00:01:09,300 --> 00:01:14,690
+your test will break as you change the implementation then you have to spend a whole lot of time 
+ با تغییر پیاده سازی، آزمون شما خراب می شود، سپس باید زمان زیادی را صرف کنید
+
+32
+00:01:14,700 --> 00:01:19,290
+fixing or rewriting  these tests. that's why a lot of people fail when 
+ اصلاح یا بازنویسی این تست ها به همین دلیل است که بسیاری از مردم وقتی شکست می خورند
+
+33
+00:01:19,300 --> 00:01:20,390
+it comes to automated testing. 
+ به تست خودکار می رسد.
+
+34
+00:01:20,400 --> 00:01:23,789
+So remember your test should test the behavior, 
+ بنابراین به یاد داشته باشید که آزمون شما باید رفتار را آزمایش کند،
+
+35
+00:01:23,800 --> 00:01:25,289
+not the implementation. 
+ نه اجرا
+
+36
+00:01:25,300 --> 00:01:28,289
+So they should test how an API behaves. not. 
+ بنابراین آنها باید نحوه عملکرد یک API را آزمایش کنند. نه
+
+37
+00:01:28,300 --> 00:01:29,190
+How it's implemented 
+ چگونه اجرا می شود
+
+38
+00:01:29,200 --> 00:01:32,990
+Let's put this in practice let's say you want to test the creation of a 
+ بیایید این را در عمل اجرا کنیم، فرض کنید می خواهید ایجاد a را آزمایش کنید
+
+39
+00:01:33,000 --> 00:01:33,289
+collection. 
+ مجموعه.
+
+40
+00:01:33,300 --> 00:01:36,690
+So we sent a post request for the collections end 
+ بنابراین ما یک درخواست پست برای پایان مجموعه ارسال کردیم
+
+41
+00:01:36,700 --> 00:01:36,990
+point. 
+ نقطه.
+
+42
+00:01:37,000 --> 00:01:39,190
+Now how does this endpoint behave? 
+ حالا این نقطه پایانی چگونه رفتار می کند؟
+
+43
+00:01:39,200 --> 00:01:41,390
+That's what we need to test security, 
+ این چیزی است که ما برای آزمایش امنیت نیاز داریم،
+
+44
+00:01:41,400 --> 00:01:44,190
+we have a few scenarios if the client is not authenticated 
+ اگر کلاینت احراز هویت نشده باشد، چند سناریو داریم
+
+45
+00:01:44,200 --> 00:01:46,589
+we expect a 4-1 response, 
+ ما انتظار پاسخ 4-1 را داریم،
+
+46
+00:01:46,600 --> 00:01:47,789
+meaning unauthorized . 
+ به معنی غیر مجاز .
+
+47
+00:01:47,800 --> 00:01:49,890
+If the client is authenticated, 
+ اگر مشتری احراز هویت شده باشد،
+
+48
+00:01:49,900 --> 00:01:52,089
+but the current user is not an admin. 
+ اما کاربر فعلی مدیر نیست.
+
+49
+00:01:52,100 --> 00:01:55,289
+then we expect a 403 response meaning forbidden 
+ سپس ما انتظار داریم پاسخ 403 به معنای ممنوع است
+
+50
+00:01:55,300 --> 00:01:58,089
+So the current user should not have access to this 
+ بنابراین کاربر فعلی نباید به این دسترسی داشته باشد
+
+51
+00:01:58,100 --> 00:02:01,490
+function. now if the current user is an admin but the request. 
+ تابع. حالا اگر کاربر فعلی یک ادمین باشد اما درخواست.
+
+52
+00:02:01,500 --> 00:02:02,990
+Doesn't include a collection name. 
+ شامل نام مجموعه نمی شود.
+
+53
+00:02:03,000 --> 00:02:04,089
+Then we expect what? 
+ بعد ما چه انتظاری داریم؟
+
+54
+00:02:04,700 --> 00:02:05,789
+a 400 response, 
+ پاسخ 400،
+
+55
+00:02:05,800 --> 00:02:09,990
+meaning bad request and also the response body should include 
+ به معنی درخواست بد و همچنین بدن پاسخ باید شامل شود
+
+56
+00:02:10,000 --> 00:02:11,690
+an error message for the collection name. 
+ یک پیام خطا برای نام مجموعه
+
+57
+00:02:11,700 --> 00:02:12,790
+And finally, 
+ و در نهایت،
+
+58
+00:02:12,800 --> 00:02:15,390
+if the current user is an admin and our requests 
+ اگر کاربر فعلی مدیر است و درخواست های ما
+
+59
+00:02:15,400 --> 00:02:16,590
+include a collection anme, 
+ شامل یک مجموعه انیمه،
+
+60
+00:02:16,600 --> 00:02:20,190
+then we expect a 200 response and the idea 
+ سپس ما انتظار یک پاسخ 200 و ایده را داریم
+
+61
+00:02:20,200 --> 00:02:22,790
+of the new collection should be included in the response. 
+ مجموعه جدید باید در پاسخ درج شود.
+
+62
+00:02:22,800 --> 00:02:25,590
+So this is how our Collections end point should behave. 
+ بنابراین نقطه پایانی مجموعه ما باید اینگونه رفتار کند.
+
+63
+00:02:25,600 --> 00:02:29,890
+when it comes to creating a collection. wen can test this Behavior manually 
+ وقتی نوبت به ایجاد یک مجموعه می رسد. we می تواند این رفتار را به صورت دستی آزمایش کند
+
+64
+00:02:29,900 --> 00:02:32,590
+by hand in the browser or we can automate it using 
+ به صورت دستی در مرورگر یا می توانیم با استفاده از آن آن را خودکار کنیم
+
+65
+00:02:32,600 --> 00:02:32,890
+Code. 
+ کد.
+
+66
+00:02:32,900 --> 00:02:33,390
+Obviously, 
+ به طور مشخص،
+
+67
+00:02:33,400 --> 00:02:34,490
+if you're automated, 
+ اگر شما خودکار هستید،
+
+68
+00:02:34,500 --> 00:02:37,090
+we can run all of our tests in a matter 
+ ما می توانیم تمام آزمایش های خود را در یک موضوع انجام دهیم
+
+69
+00:02:37,100 --> 00:02:39,290
+of seconds and see if you have broken something or 
+ چند ثانیه و ببینید آیا چیزی را شکسته اید یا نه
+
+70
+00:02:39,300 --> 00:02:39,490
+not. 
+ نه
+
+71
+00:02:39,500 --> 00:02:42,290
+So I want to emphasize this one more time your 
+ بنابراین من می خواهم یک بار دیگر بر این موضوع تاکید کنم
+
+72
+00:02:42,300 --> 00:02:45,490
+tests are to test the behavior and not the implementation. 
+ تست ها برای آزمایش رفتار هستند و نه اجرا.
+
+73
+00:02:45,500 --> 00:02:48,190
+Next we're gonna talk about testing Framework. 
+ در ادامه در مورد تست Framework صحبت خواهیم کرد.
+

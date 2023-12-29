@@ -12,8 +12,8 @@ def create_app(test_config=None):
     )
 
     # config files directory
-    FILES_FOLDER = '/path/to/the/files'
-    app.config['FILES_FOLDER'] = FILES_FOLDER
+    FILES_FOLDER = 'files'
+    app.config['FILES_FOLDER'] = os.getcwd() + f"/{FILES_FOLDER}"
 
     if test_config is None:
         # load the instance config, if it exists, when not testing

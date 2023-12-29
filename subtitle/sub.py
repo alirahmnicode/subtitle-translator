@@ -17,7 +17,8 @@ def make_subtitle(subs: list, files_path, file_name):
 
 def write_file(subs, files_path, file_name):
     """This function writes srt file"""
-    with open(os.path.join(files_path, file_name), "w", encoding="utf-8") as f:
+    file_path = files_path + f"/{file_name}"
+    with open(file_path, "w", encoding="utf-8") as f:
         file = f.write(subs)
 
     return file
